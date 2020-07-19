@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Input, Card, ThemeProvider, Header, Button } from 'react-native-elements';
+import {Input, Card, ThemeProvider, Header, Button, Text } from 'react-native-elements';
 import { StyleSheet, View} from 'react-native';
 import axios from 'axios';
 import {PieChart} from 'react-native-chart-kit'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Home() {
+export default function Home({navigation}) {
 
   const [searchText, setSearchText] = useState();
   const [searchRedText, setRedText]= useState();
@@ -78,6 +79,10 @@ export default function Home() {
                 />
               </View>
             }
+            <TouchableOpacity style={styles.LogoutBtn}
+                onPress={() => navigation.navigate('Login')}>
+                    <Text>LOGOUT</Text>
+            </TouchableOpacity>
       </ThemeProvider>
   );
 }
@@ -87,4 +92,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center'
     },
+    LogoutBtn: {
+        width:"80%",
+        backgroundColor:"#cc4e1d",
+        borderRadius:25,
+        height:50,
+        alignItems:"center",
+        justifyContent:"center",
+        marginTop:40,
+        marginBottom:10
+    }
   });

@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default class App extends React.Component {
+export default function Login({navigation}) {
   state={
     email:"",
     password:""
   }
-  render(){
     return (
       <View style={styles.container}>
         <Text style={styles.logo}>NLP</Text>
@@ -28,17 +29,18 @@ export default class App extends React.Component {
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
+        
+        <TouchableOpacity style={styles.loginBtn}
+           onPress={() => navigation.navigate('Home')}>
+                <Text>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity 
+            onPress={() => navigation.navigate('Signup')} 
+        >
           <Text style={styles.loginText}>Signup</Text>
         </TouchableOpacity>
-
-  
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
