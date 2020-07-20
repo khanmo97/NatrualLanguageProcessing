@@ -7,6 +7,8 @@ from textblob import TextBlob
 import praw
 import re
 
+defaultUsername = 'mohammed'
+defaultPassword = 'password'
 
 def processTweetPhrase(searchText):
     consKey='m7D3STDCc6WMuZdIXDejSyZxi'

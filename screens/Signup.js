@@ -5,6 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Signup({navigation})
 {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [confirmPassword, setConfimrPassword] = useState();
     state={
         email:"",
         password:""
@@ -15,21 +18,21 @@ export default function Signup({navigation})
                 <Input
                     placeholder = 'Email'
                     placeholderTextColor="#003f5c"
-                    onChangeText={text => this.setState({email:text})}
+                    onChangeText={text => setEmail(text)}
                 />
                 <Input
-                    secureEntry
+                    secureTextEntry={true}
                     style={StyleSheet.inputText}
                     placeholder="Password"
                     placeholderTextColor="#003f5c"
-                    onChangeText={text => this.setState({password:text})}
+                    onChangeText={text => setPassword(text)}
                 />
                 <Input
-                    secureEntry
+                    secureTextEntry={true}
                     style={StyleSheet.inputText}
                     placeholder="Confirm Password"
                     placeholderTextColor="#003f5c"
-                    onChangeText={text => this.setState({password:text})}
+                    onChangeText={text => setConfimrPassword(text)}
                 />
             </Card>
             <TouchableOpacity style={styles.SignupBtn}
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'teal',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     inputView:{
         width:"80%",
