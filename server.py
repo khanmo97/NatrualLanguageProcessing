@@ -43,16 +43,21 @@ def processRedditPhrase(searchRedText):
     clientSecret= 'Mx9uM7CCQ88ojrrc8nsHjzGTjD4'
     userAgent='RedditNLP'
     userName='khanmo97'
+    pword='1Whatisit?'
 
     searchFor=input('Reddit search phrase\n')
     reddit=praw.Reddit(client_id=clientId, client_secret=clientSecret,user_agent=userAgent,username=userName,password=pword)
-    subred=reddit.subreddit(searchFor)
+    subred=reddit.subreddit('politics').search('title:' + searchFor)
     new=subred.new(limit=20)
     type(new)
     x=next(new)
     dir(new)
     for i in new:
-        print(i.title, i.url)
+        sentScore=TextBlob(i.title)
+    sentScore=TextBlob()
+    avg=sentScore/20
+    return str(round(avg*100,2))
+    return 
     
 
 
@@ -67,10 +72,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 
         if (self.path == '/login'): #if it has correct details
             print(self.rfile.read(int(self.headers['content-length'])))
-
-
-            pass
-        results = processTweetPhrase(data['searchText'])
+        elif(self.path == '/twitter'):
+            results = processTweetPhrase(data['searchText'])
+        elif(self.path == '/reddit'):
+            results = processRedditPhrase(data['searchText'])
         response = json.dumps({'sentiment_score': results})
         f = open("demofile2.txt", "a")
         f.write(self.path)

@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 import {Input, Card, ThemeProvider, Header, Button, Text } from 'react-native-elements';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Component} from 'react-native';
 import axios from 'axios';
 import {PieChart} from 'react-native-chart-kit'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ActionButton from 'react-native-circular-action-menu';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
+
+var HistoryArray = ["none"];
 
 export default function Home({navigation}) {
 
@@ -17,26 +22,23 @@ export default function Home({navigation}) {
   }
 
   async function submitPressed() {
-    const response = await axios.post('http://192.168.0.18:8080/login', {searchText});
-    console.log(response);
-    //will this shit even work????
-    alert(response.data.sentiment_score);
-    setSentiment(response.data.sentiment_score);
+    try {
+          const response = await axios.post('http://192.168.0.18:8080/twitter', {searchText});
+          setSentiment(response.data.sentiment_score);
+    } catch (error) {
+      console.log(JSON.stringify(error))
+    }
   }
 
   async function submitRedPressed(){
-    const redResponse= await axios.post('http://192.168.0.18:8080/test', {searchRedText});
+    const redResponse= await axios.post('http://192.168.0.18:8080/reddit', {searchRedText});
     console.log(JSON.stringify(redResponse.data));
     alert(JSON.stringify(redResponse));
   }
-///ok this is good shit now
-// think of it this way you can have cookies after you're done
+  
   return (
-    <ThemeProvider>
-        <Header />
-          <Card
-              title='NLP Tweet Analyzer'//'pain in the ass again
-            >
+      <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
+          <Card title='NLP Tweet Analyzer'>
               <Input
                 placeholder='Enter search phrase'
                 value={searchText}
@@ -44,26 +46,11 @@ export default function Home({navigation}) {
               />
               <Button
                 title='SUBMIT'
-                onPress={submitPressed}     //Remember the function onclick in gtkmm well yah same shit here      
+                onPress={submitPressed}
               />
-            </Card>
+          </Card>
 
-            <Card
-              title='NLP Reddit Analyzer'//'pain in the ass again
-            >
-              <Input
-                placeholder='Enter search phrase'
-                value={searchRedText}
-                onChangeText={(val) => setRedText(val)}
-              />
-              <Button
-                title='SUBMIT'
-                onPress={submitRedPressed}     //Remember the function onclick in gtkmm well yah same shit here      
-                color='#FF5700'
-              />
-            </Card>
-
-            {sentiment &&
+          {sentiment &&
               <View style={styles.container}>
                 <PieChart
                   data={[
@@ -78,12 +65,24 @@ export default function Home({navigation}) {
                   paddingLeft={"30"}
                 />
               </View>
-            }
-            <TouchableOpacity style={styles.LogoutBtn}
-                onPress={() => navigation.navigate('Login')}>
-                    <Text>LOGOUT</Text>
-            </TouchableOpacity>
-      </ThemeProvider>
+          }
+
+        <ActionButton buttonColor="rgba(231,76,60,1)" outRangeScale = '1' >
+          
+          <ActionButton.Item buttonColor='#1DA1F2' title="Twitter" size={75} onPress={() => navigation.navigate('Home')}>
+              <Icon name="twitter" style={styles.actionButtonIcon} size={25}/>
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#FF5700' title="Reddit" size={75} onPress={() => navigation.navigate('Reddit')}>
+              <Icon name="reddit" style={styles.actionButtonIcon} size={25}/>
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#ccdbd6' title="Logout" size={75} onPress={() => navigation.navigate('Login')}>
+              <Icon name="sign-out-alt" style={styles.actionButtonIcon} size={25} />
+          </ActionButton.Item>
+
+        </ActionButton>
+
+      </View>
+
   );
 }
 

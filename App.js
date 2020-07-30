@@ -5,11 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './screens/Login'
 import Home from './screens/Home'
 import Signup from './screens/Signup'
+import Reddit from './screens/Reddit'
 
 const Stack = createStackNavigator();
 
 
 export default function App() {
+  
   return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -28,6 +30,11 @@ export default function App() {
            name="Signup"
            component={Signup}
            options={{title: 'Signup'}}
+          />
+          <Stack.Screen
+            name="Reddit"
+            component={Reddit}
+            options={{title: 'Reddit'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
