@@ -54,12 +54,9 @@ def processRedditPhrase(searchRedText):
     dir(new)
     for i in new:
         sentScore=TextBlob(i.title)
-    sentScore=TextBlob()
+    #sentScore=TextBlob()
     avg=sentScore/20
     return str(round(avg*100,2))
-    return 
-    
-
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 
@@ -70,16 +67,8 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         data = json.loads((self.rfile.read(int(self.headers['content-length']))).decode('utf-8'))
 
-        if (self.path == '/login'): #if it has correct details
-            print(self.rfile.read(int(self.headers['content-length'])))
-        elif(self.path == '/twitter'):
-            results = processTweetPhrase(data['searchText'])
-        elif(self.path == '/reddit'):
-            results = processRedditPhrase(data['searchText'])
+        results = processTweetPhrase(data['searchText'])
         response = json.dumps({'sentiment_score': results})
-        f = open("demofile2.txt", "a")
-        f.write(self.path)
-        f.close()
         self.wfile.write(response.encode(encoding='utf_8'))
 
 PORT = 8080

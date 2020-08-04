@@ -1,45 +1,51 @@
 import React, {useState} from 'react';
 import {Input, Card, ThemeProvider, Header, Button, Text} from 'react-native-elements';
-import {StyleSheet, View, TextInput,} from 'react-native';
+import {StyleSheet, View, TextInput, ImageBackground, Image} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 
 export default function Signup({navigation})
 {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfimrPassword] = useState();
+    const image = { uri: 'https://i.stack.imgur.com/uD9js.png'};
+
     state={
         email:"",
         password:""
     }
     return(
-        <ThemeProvider style={styles.container}>
-            <Card>
-                <Input
-                    placeholder = 'Email'
-                    placeholderTextColor="#003f5c"
-                    onChangeText={text => setEmail(text)}
-                />
-                <Input
-                    secureTextEntry={true}
-                    style={StyleSheet.inputText}
-                    placeholder="Password"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={text => setPassword(text)}
-                />
-                <Input
-                    secureTextEntry={true}
-                    style={StyleSheet.inputText}
-                    placeholder="Confirm Password"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={text => setConfimrPassword(text)}
-                />
-            </Card>
-            <TouchableOpacity style={styles.SignupBtn}
-                onPress={() => navigation.navigate('Home')}>
-                <Text>SIGNUP</Text>
-            </TouchableOpacity>
-        </ThemeProvider>
+            <View style={{flex: 5, justifyContent:'center', backgroundColor:'#fb5b5a'}}>
+                <Card>
+                    <Image source = {require('../assets/Logo.png')} style={{alignSelf: 'center'}}/>
+                        <Input
+                            placeholder = 'Email'
+                            placeholderTextColor = "#003f5c"
+                            style = {StyleSheet.inputText}
+                            onChangeText = {text => setEmail(text)}
+                        />
+                        <Input
+                            secureTextEntry={true}
+                            style={StyleSheet.inputText}
+                            placeholder="Password"
+                            placeholderTextColor="#003f5c"
+                            onChangeText={text => setPassword(text)}
+                        />
+                        <Input
+                            secureTextEntry={true}
+                            style={StyleSheet.inputText}
+                            placeholder="Confirm Password"
+                            placeholderTextColor="#003f5c"
+                            onChangeText={text => setConfimrPassword(text)}
+                            backgroundColor='transparent'
+                        />
+                        <TouchableOpacity style={styles.SignupBtn}
+                            onPress={() => navigation.navigate('Home')}>
+                            <Text>SIGNUP</Text>
+                        </TouchableOpacity>
+                </Card>
+            </View>
     );
 }
 
@@ -70,7 +76,14 @@ const styles = StyleSheet.create({
         height:50,
         alignItems:"center",
         justifyContent:"center",
+        alignContent:"center",
+        alignSelf: "center",
         marginTop:40,
         marginBottom:10
+    },
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
     }
 });

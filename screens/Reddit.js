@@ -27,7 +27,7 @@ async function submitRedPressed(){
 
 
 return (
-    <View tyle={{flex:1, backgroundColor: '#f3f3f3'}}>
+    <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
         <Card title = 'NLP Reddit Analyzer'>
             <Input
                 placeholder='Enter search phrase'
@@ -69,7 +69,7 @@ return (
             </ActionButton.Item>
             </ActionButton>
       
-    </View>
+    </View> 
     
 );
 

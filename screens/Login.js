@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -13,7 +13,7 @@ export default function Login({navigation}) {
   }
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>NLP</Text>
+        <Image source = {require('../assets/Logo.png')}/>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -37,6 +37,7 @@ export default function Login({navigation}) {
            onPress={() => navigation.navigate('Home')}>
                 <Text>LOGIN</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity 
             onPress={() => navigation.navigate('Signup')} 
         >

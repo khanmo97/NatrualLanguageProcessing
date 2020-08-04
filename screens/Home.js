@@ -23,7 +23,7 @@ export default function Home({navigation}) {
 
   async function submitPressed() {
     try {
-          const response = await axios.post('http://192.168.0.18:8080/twitter', {searchText});
+          const response = await axios.post('http://192.168.0.18:8080/', {searchText});
           setSentiment(response.data.sentiment_score);
     } catch (error) {
       console.log(JSON.stringify(error))
@@ -54,7 +54,7 @@ export default function Home({navigation}) {
               <View style={styles.container}>
                 <PieChart
                   data={[
-                    {name: 'Positive', score: +sentiment, color: '#fa7369', legendFontColor: '#7F7F7F', legendFontSize: 15},
+                    {name: 'Positive', score: sentiment, color: '#fa7369', legendFontColor: '#7F7F7F', legendFontSize: 15},
                     {name: 'Other', score: (100 - +sentiment), color: 'lightgray', legendFontColor: '#7F7F7F', legendFontSize: 15}
                   ]}
                   width={350}
