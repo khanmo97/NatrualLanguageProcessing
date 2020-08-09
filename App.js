@@ -6,6 +6,7 @@ import Login from './screens/Login'
 import Home from './screens/Home'
 import Signup from './screens/Signup'
 import Reddit from './screens/Reddit'
+import History from './screens/History'
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ export default function App() {
   return (
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
+          <Stack.Screen
             name="Login"
             component={Login}
             options={{title: 'Login'}}
@@ -36,6 +37,11 @@ export default function App() {
             component={Reddit}
             options={{title: 'Reddit'}}
           />
+          <Stack.Screen
+           name="History"
+           component={History}
+           options={{title: 'History'}}
+           />
         </Stack.Navigator>
       </NavigationContainer>
   );

@@ -58,11 +58,11 @@ return (
           </View>
         }
             <ActionButton buttonColor="rgba(231,76,60,1)" outRangeScale = '1' >
+            <ActionButton.Item buttonColor='slategray' title="History" size={75} onPress={() => navigation.navigate('History')}>
+              <Icon name="history" style={styles.actionButtonIcon} size={25} />
+          </ActionButton.Item>
             <ActionButton.Item buttonColor='#1DA1F2' title="Twitter" size={75} onPress={() => navigation.navigate('Home')}>
                 <Icon name="twitter" style={styles.actionButtonIcon} size={25}/>
-            </ActionButton.Item>
-            <ActionButton.Item buttonColor='#FF5700' title="Reddit" size={75} onPress={() => navigation.navigate('Reddit')}>
-                <Icon name="reddit" style={styles.actionButtonIcon} size={25}/>
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#ccdbd6' title="Logout" size={75} onPress={() => navigation.navigate('Login')}>
                 <Icon name="sign-out-alt" style={styles.actionButtonIcon} size={25} />

@@ -6,7 +6,20 @@ import {PieChart} from 'react-native-chart-kit'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ActionButton from 'react-native-circular-action-menu';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import * as firebase from 'firebase';
 
+Project ID: sentiment-analysis-41e91
+Project number: 211417807345
+Default GCP resource location: nam5 (us-central)
+Web API Key: AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg',
+  authDomain:
+  databaseURT:
+  projectId: 
+  storageBucket: "",
+};
 
 var HistoryArray = ["none"];
 
@@ -37,7 +50,7 @@ export default function Home({navigation}) {
   }
   
   return (
-      <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
+        <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
           <Card title='NLP Tweet Analyzer'>
               <Input
                 placeholder='Enter search phrase'
@@ -66,11 +79,10 @@ export default function Home({navigation}) {
                 />
               </View>
           }
-
+        
         <ActionButton buttonColor="rgba(231,76,60,1)" outRangeScale = '1' >
-          
-          <ActionButton.Item buttonColor='#1DA1F2' title="Twitter" size={75} onPress={() => navigation.navigate('Home')}>
-              <Icon name="twitter" style={styles.actionButtonIcon} size={25}/>
+          <ActionButton.Item buttonColor='slategray' title="History" size={75} onPress={() => navigation.navigate('History')}>
+              <Icon name="history" style={styles.actionButtonIcon} size={25} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#FF5700' title="Reddit" size={75} onPress={() => navigation.navigate('Reddit')}>
               <Icon name="reddit" style={styles.actionButtonIcon} size={25}/>
@@ -78,8 +90,8 @@ export default function Home({navigation}) {
           <ActionButton.Item buttonColor='#ccdbd6' title="Logout" size={75} onPress={() => navigation.navigate('Login')}>
               <Icon name="sign-out-alt" style={styles.actionButtonIcon} size={25} />
           </ActionButton.Item>
-
         </ActionButton>
+
 
       </View>
 
