@@ -1,25 +1,24 @@
 import React, {useState} from 'react';
 import {Input, Card, ThemeProvider, Header, Button, Text } from 'react-native-elements';
-import { StyleSheet, View, Component} from 'react-native';
+import { StyleSheet, View, Component, Animated} from 'react-native';
 import axios from 'axios';
 import {PieChart} from 'react-native-chart-kit'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ActionButton from 'react-native-circular-action-menu';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import * as firebase from 'firebase';
 
-Project ID: sentiment-analysis-41e91
-Project number: 211417807345
-Default GCP resource location: nam5 (us-central)
-Web API Key: AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg
+// Project ID: sentiment-analysis-41e91
+// Project number: 211417807345
+// Default GCP resource location: nam5 (us-central)
+// Web API Key: AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg',
-  authDomain:
-  databaseURT:
-  projectId: 
-  storageBucket: "",
-};
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg',
+//   authDomain:
+//   databaseURT:
+//   projectId: 
+//   storageBucket: "",
+// };
 
 var HistoryArray = ["none"];
 
@@ -37,7 +36,9 @@ export default function Home({navigation}) {
   async function submitPressed() {
     try {
           const response = await axios.post('http://192.168.0.18:8080/', {searchText});
-          setSentiment(response.data.sentiment_score);
+          const sentiment_chart = JSON.stringify(response.data.sentiment_score);
+          setSentiment(parseInt(sentiment_chart));
+          // alert(response);
     } catch (error) {
       console.log(JSON.stringify(error))
     }

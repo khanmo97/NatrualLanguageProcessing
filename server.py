@@ -18,7 +18,7 @@ def processTweetPhrase(searchText):
 
     aKey= tweepy.OAuthHandler(consKey, consKeySec)
     aKey.set_access_token(acToken, acTokenSec)
-
+ 
     api=tweepy.API(aKey)
 
     hashtag = searchText
@@ -36,7 +36,8 @@ def processTweetPhrase(searchText):
             print('\n')
 
     avg=sentScore/maxTweets
-    return str(round(avg*100,2))
+    avg=round(avg*100,2)
+    return avg
 
 def processRedditPhrase(searchRedText):
     clientId='gnESpqRTBGNuKQ'

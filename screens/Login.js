@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,7 +11,7 @@ export default function Login({navigation}) {
     email:"",
     password:""
   }
-    return (
+    return ( 
       <View style={styles.container}>
         <Image source = {require('../assets/Logo.png')}/>
         <View style={styles.inputView} >
