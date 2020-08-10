@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:211417807345:android:9fa0a7741f092f57982c50",
+        "mobilesdk_app_id": "1:211417807345:android:fa361dc887fbc1e9982c50",
         "android_client_info": {
-          "package_name": "sentiment.analyss"
+          "package_name": "nlp.sentiment"
         }
       },
       "oauth_client": [
