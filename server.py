@@ -4,7 +4,6 @@ import json
 import tweepy
 import csv 
 from textblob import TextBlob
-import praw
 import re
 
 defaultUsername = 'mohammed'
@@ -24,40 +23,29 @@ def processTweetPhrase(searchText):
     hashtag = searchText
     hashtagList = hashtag.split()
     avg=0
-    maxTweets=10
-    sentScore=0
+    maxTweets=200
+    negative=0
+    positive=0
+    neutral=0
 
 
     for x in hashtagList:
         for tweet in tweepy.Cursor(api.search,q=x+' -filter:retweets', lang="en", tweet_mode='extended').items(maxTweets) : 
             tweetSent=TextBlob(tweet.full_text)
-            sentScore+=tweetSent.sentiment.polarity
-            print(tweet.full_text.replace('\n', ' '))
+            
+            polarity = tweetSent.sentiment.polarity
+            
+            if polarity < -0.15:
+                negative = negative + 1
+            elif polarity > 0.15:
+                positive = positive + 1
+            elif polarity != 0.0:
+                neutral = neutral + 1
+            full_text = tweet.full_text.encode("ascii", "ignore").decode()
+            print(full_text)
             print('\n')
 
-    avg=sentScore/maxTweets
-    avg=round(avg*100,2)
-    return avg
-
-def processRedditPhrase(searchRedText):
-    clientId='gnESpqRTBGNuKQ'
-    clientSecret= 'Mx9uM7CCQ88ojrrc8nsHjzGTjD4'
-    userAgent='RedditNLP'
-    userName='khanmo97'
-    pword='1Whatisit?'
-
-    searchFor=input('Reddit search phrase\n')
-    reddit=praw.Reddit(client_id=clientId, client_secret=clientSecret,user_agent=userAgent,username=userName,password=pword)
-    subred=reddit.subreddit('politics').search('title:' + searchFor)
-    new=subred.new(limit=20)
-    type(new)
-    x=next(new)
-    dir(new)
-    for i in new:
-        sentScore=TextBlob(i.title)
-    #sentScore=TextBlob()
-    avg=sentScore/20
-    return str(round(avg*100,2))
+    return {'negative': negative, 'positive': positive, 'neutral': neutral}
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 
@@ -67,7 +55,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
         data = json.loads((self.rfile.read(int(self.headers['content-length']))).decode('utf-8'))
-
+        print(data)
         results = processTweetPhrase(data['searchText'])
         response = json.dumps({'sentiment_score': results})
         self.wfile.write(response.encode(encoding='utf_8'))
@@ -75,6 +63,6 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
 PORT = 8080
 Handler = http.server.SimpleHTTPRequestHandler
 
-with socketserver.TCPServer(("192.168.0.18", PORT), MyHandler) as httpd:
-    print("serving at port", PORT)
-    httpd.serve_forever()
+httpd = socketserver.TCPServer(("192.168.1.68", PORT), MyHandler)
+print("serving at port", PORT)
+httpd.serve_forever()

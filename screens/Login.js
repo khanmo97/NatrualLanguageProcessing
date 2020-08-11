@@ -7,10 +7,30 @@ export default function Login({navigation}) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    state={
-    email:"",
-    password:""
-  }
+    const EMAIL = 'nlp@gmail.com';
+    const PASSWORD = 'ILoveMichaela';
+
+    function login() {
+    	if (email.toLowerCase() !== EMAIL) {
+			alert('Invalid email');
+			clearScreen();
+			return;
+		}
+    	if (password !== PASSWORD) {
+    		alert('Invalid password');
+			clearScreen();
+			return;
+		}
+		navigation.navigate('Home');
+	}
+
+	function clearScreen()
+	{
+		setEmail(null);
+		setPassword(null);
+	}
+
+
     return ( 
       <View style={styles.container}>
         <Image source = {require('../assets/Logo.png')}/>
@@ -19,6 +39,7 @@ export default function Login({navigation}) {
             style={styles.inputText}
             placeholder="Email" 
             placeholderTextColor="#003f5c"
+			value={email}
             onChangeText={text => setEmail(text)}/>
         </View>
         <View style={styles.inputView} >
@@ -27,6 +48,7 @@ export default function Login({navigation}) {
             style={styles.inputText}
             placeholder="Password" 
             placeholderTextColor="#003f5c"
+			value={password}
             onChangeText={text => setPassword(text)}/>
         </View>
         <TouchableOpacity>
@@ -34,7 +56,7 @@ export default function Login({navigation}) {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.loginBtn}
-           onPress={() => navigation.navigate('Home')}>
+           onPress={login}>
                 <Text>LOGIN</Text>
         </TouchableOpacity>
         

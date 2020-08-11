@@ -6,100 +6,90 @@ import {PieChart} from 'react-native-chart-kit'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ActionButton from 'react-native-circular-action-menu';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Spinner from 'react-native-loading-spinner-overlay';
 
-// Project ID: sentiment-analysis-41e91
-// Project number: 211417807345
-// Default GCP resource location: nam5 (us-central)
-// Web API Key: AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg
-
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyDNvwd9fiK4-QZdvSfKX2LfMIlC9VgUGDg',
-//   authDomain:
-//   databaseURT:
-//   projectId: 
-//   storageBucket: "",
-// };
-
-var HistoryArray = ["none"];
 
 export default function Home({navigation}) {
 
   const [searchText, setSearchText] = useState();
-  const [searchRedText, setRedText]= useState();
   const [sentiment, setSentiment] = useState();
+  const [loading, setLoading] = useState(false);
   const chartConfig = {
     backgroundGradientFrom: '#1E2923',
     backgroundGradientTo: '#08130D',
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`
-  }
+  };
 
   async function submitPressed() {
     try {
-          const response = await axios.post('http://192.168.0.18:8080/', {searchText});
-          const sentiment_chart = JSON.stringify(response.data.sentiment_score);
-          setSentiment(parseInt(sentiment_chart));
-          // alert(response);
-    } catch (error) {
-      console.log(JSON.stringify(error))
-    }
-  }
-
-  async function submitRedPressed(){
-    const redResponse= await axios.post('http://192.168.0.18:8080/reddit', {searchRedText});
-    console.log(JSON.stringify(redResponse.data));
-    alert(JSON.stringify(redResponse));
+    	setLoading(true);
+		setSentiment();
+		const response = await axios.post('http://192.168.1.68:8080/', {searchText});
+		console.log(JSON.stringify(response.data.sentiment_score));
+		setSentiment(response.data.sentiment_score);
+	} catch (error) {
+		alert(JSON.stringify(error));
+	} finally {
+    	setLoading(false);
+	}
   }
   
-  return (
-        <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
-          <Card title='NLP Tweet Analyzer'>
-              <Input
-                placeholder='Enter search phrase'
-                value={searchText}
-                onChangeText={(val) => setSearchText(val)}
-              />
-              <Button
-                title='SUBMIT'
-                onPress={submitPressed}
-              />
-          </Card>
+	return (
+		<View style={{flex:1, backgroundColor: '#f3f3f3'}}>
+			<Spinner
+				visible={loading}
+				textContent={'Analyzing Tweets...'}
+				textStyle={styles.spinnerTextStyle}
+			/>
+			<Card title='NLP Tweet Analyzer'>
+			<Input
+				placeholder='Enter search phrase'
+				value={searchText}
+				onChangeText={(val) => setSearchText(val)}
+			/>
+			<Button
+				title='SUBMIT'
+				onPress={submitPressed}
+			/>
+			</Card>
 
-          {sentiment &&
-              <View style={styles.container}>
-                <PieChart
-                  data={[
-                    {name: 'Positive', score: sentiment, color: '#fa7369', legendFontColor: '#7F7F7F', legendFontSize: 15},
-                    {name: 'Other', score: (100 - +sentiment), color: 'lightgray', legendFontColor: '#7F7F7F', legendFontSize: 15}
-                  ]}
-                  width={350}
-                  height={200}
-                  accessor={'score'}
-                  backgroundColor='transparent'
-                  chartConfig={chartConfig}
-                  paddingLeft={"30"}
-                />
-              </View>
-          }
-        
-        <ActionButton buttonColor="rgba(231,76,60,1)" outRangeScale = '1' >
-          <ActionButton.Item buttonColor='slategray' title="History" size={75} onPress={() => navigation.navigate('History')}>
-              <Icon name="history" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#FF5700' title="Reddit" size={75} onPress={() => navigation.navigate('Reddit')}>
-              <Icon name="reddit" style={styles.actionButtonIcon} size={25}/>
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#ccdbd6' title="Logout" size={75} onPress={() => navigation.navigate('Login')}>
-              <Icon name="sign-out-alt" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-        </ActionButton>
+			{sentiment &&
+				<View style={styles.container}>
+					<PieChart
+						data={[
+							{name: 'Positive', score: sentiment.positive, color: '#97f75c', legendFontColor: '#7F7F7F', legendFontSize: 15},
+							{name: 'Negative', score: sentiment.negative, color: '#fa7369', legendFontColor: '#7F7F7F', legendFontSize: 15},
+							{name: 'Neutral', score: sentiment.neutral, color: '#f7d35c', legendFontColor: '#7F7F7F', legendFontSize: 15}
+						]}
+						width={350}
+						height={200}
+						accessor={'score'}
+						backgroundColor='transparent'
+						chartConfig={chartConfig}
+						paddingLeft={"30"}
+					/>
+				</View>
+			}
 
-
-      </View>
-
-  );
+			<ActionButton buttonColor="rgba(231,76,60,1)" outRangeScale = '1' >
+				<ActionButton.Item buttonColor='slategray' title="History" size={75} onPress={() => navigation.navigate('History')}>
+					<Icon name="history" style={styles.actionButtonIcon} size={25} />
+				</ActionButton.Item>
+				<ActionButton.Item buttonColor='#FF5700' title="Reddit" size={75} onPress={() => navigation.navigate('Reddit')}>
+					<Icon name="reddit" style={styles.actionButtonIcon} size={25}/>
+				</ActionButton.Item>
+				<ActionButton.Item buttonColor='#ccdbd6' title="Logout" size={75} onPress={() => navigation.navigate('Login')}>
+					<Icon name="sign-out-alt" style={styles.actionButtonIcon} size={25} />
+				</ActionButton.Item>
+			</ActionButton>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
+	spinnerTextStyle: {
+		color: '#FFF'
+	},
     container: {
       justifyContent: 'center',
       alignItems: 'center'
