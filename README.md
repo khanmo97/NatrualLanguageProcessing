@@ -1,5 +1,5 @@
 # NatrualLanguageProcessing
-CSE 3310 (Mohammed Khan, Bawi Thang, Michaela Hay, Nicholas Soliz)
+CSE 3310 (Mohammed Khan, John Shroff, Bawi Thang, Michaela Hay, Nicholas Soliz)
 
 INSTALLING THE APP
 
