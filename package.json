@@ -12,7 +12,7 @@
     "@react-native-firebase/app": "^8.3.0",
     "@react-navigation/native": "^5.7.0",
     "@react-navigation/stack": "^5.7.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo": "^38.0.0",
     "lodash": "^4.17.19",
     "react": "16.11.0",
